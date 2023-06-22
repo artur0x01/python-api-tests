@@ -1,19 +1,18 @@
 import requests
 
-def post_v1_account():
+def post_v1_account_login():
     """
-    Register new user
+    Authenticate via credentials
     :return:
     """
-    url = "http://localhost:5051/v1/account"
+    url = "http://localhost:5051/v1/account/login"
 
     payload = {
-        "login": "login1",
-        "email": "login1@mail.ru",
-        "password": "<string>"
+        "login": "<string>",
+        "password": "<string>",
+        "rememberMe": "<boolean>"
     }
     headers = {
-        'X-Dm-Auth-Token': '<string>',
         'X-Dm-Bb-Render-Mode': '<string>',
         'Content-Type': 'application/json',
         'Accept': 'text/plain'

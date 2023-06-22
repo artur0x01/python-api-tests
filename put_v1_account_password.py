@@ -1,16 +1,17 @@
 import requests
 
-def post_v1_account():
+def put_v1_account_password():
     """
-    Register new user
+    Change registered user password
     :return:
     """
-    url = "http://localhost:5051/v1/account"
+    url = "http://localhost:5051/v1/account/password"
 
     payload = {
-        "login": "login1",
-        "email": "login1@mail.ru",
-        "password": "<string>"
+        "login": "<string>",
+        "token": "<uuid>",
+        "oldPassword": "<string>",
+        "newPassword": "<string>"
     }
     headers = {
         'X-Dm-Auth-Token': '<string>',
@@ -20,7 +21,7 @@ def post_v1_account():
     }
 
     response = requests.request(
-        method="POST",
+        method="PUT",
         url=url,
         headers=headers,
         json=payload)

@@ -1,16 +1,15 @@
 import requests
 
-def post_v1_account():
+def post_v1_account_password():
     """
-    Register new user
+    Reset registered user password
     :return:
     """
-    url = "http://localhost:5051/v1/account"
+    url = "http://localhost:5051/v1/account/password"
 
     payload = {
-        "login": "login1",
-        "email": "login1@mail.ru",
-        "password": "<string>"
+        "login": "<string>",
+        "email": "<string>"
     }
     headers = {
         'X-Dm-Auth-Token': '<string>',
