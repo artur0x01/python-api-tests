@@ -40,7 +40,7 @@ class AccountApi:
 
     def put_v1_account_token(self, token: str, **kwargs) -> Response:
         """
-        :param token:
+        :param token: str
         :return:
         """
 

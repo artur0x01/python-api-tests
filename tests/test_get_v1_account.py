@@ -1,22 +1,7 @@
-import requests
+from services.dm_api_account import DmApiAccount
 
 
-def get_v1_account():
-    """
-    Get current user
-    :return:
-    """
-    url = "http://localhost:5051/v1/account"
-
-    headers = {
-        'X-Dm-Auth-Token': '<string>',
-        'X-Dm-Bb-Render-Mode': '<string>',
-        'Accept': 'text/plain'
-    }
-
-    response = requests.request(
-        method="GET",
-        url=url,
-        headers=headers)
-
-    return response
+def test_get_v1_account():
+    api = DmApiAccount("http://localhost:5051")
+    response = api.account.get_v1_account()
+    print(response)

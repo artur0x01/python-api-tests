@@ -1,6 +1,5 @@
 import requests
 from requests import session, Response
-
 from dm_api_account.models import login_credentials_model
 
 
