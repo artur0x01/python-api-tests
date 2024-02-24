@@ -2,6 +2,6 @@ from services.dm_api_account import DmApiAccount
 
 
 def test_get_v1_account():
-    api = DmApiAccount("http://localhost:5051")
+    api = DmApiAccount("http://5.63.153.31:5051")
     response = api.account.get_v1_account()
     print(response)

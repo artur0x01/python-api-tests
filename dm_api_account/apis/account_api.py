@@ -1,4 +1,4 @@
-from requests import Response, session
+from requests import Response
 from dm_api_account.models.change_email_model import change_email
 from dm_api_account.models import change_password_model
 from dm_api_account.models.registration_model import registration_model
@@ -22,10 +22,10 @@ class AccountApi:
         """
 
         response = self.client.post(
-            path=f"/v1/account",
+            path="/v1/account",
             json=json,
-            **kwargs)
-
+            **kwargs
+        )
         return response
 
     def get_v1_account(self, **kwargs):
@@ -33,10 +33,11 @@ class AccountApi:
         Get current user
         :return:
         """
-        response = self.client.get(
-            path=f"/v1/account",
-            **kwargs)
 
+        response = self.client.get(
+            path="/v1/account",
+            **kwargs
+        )
         return response
 
     def put_v1_account_token(self, token: str, **kwargs) -> Response:
@@ -47,8 +48,8 @@ class AccountApi:
 
         response = self.client.put(
             path=f"/v1/account/{token}",
-            **kwargs)
-
+            **kwargs
+        )
         return response
 
     def post_v1_account_password(self, json: reset_password_model, **kwargs) -> Response:
@@ -59,10 +60,10 @@ class AccountApi:
         """
 
         response = self.client.post(
-            path=f"/v1/account/password",
+            path="/v1/account/password",
             json=json,
-            **kwargs)
-
+            **kwargs
+        )
         return response
 
     def put_v1_account_password(self, json: change_password_model, **kwargs) -> Response:
@@ -73,10 +74,10 @@ class AccountApi:
         """
 
         response = self.client.put(
-            path=f"/v1/account/password",
+            path="/v1/account/password",
             json=json,
-            **kwargs)
-
+            **kwargs
+        )
         return response
 
     def put_v1_account_email(self, json: change_email, **kwargs) -> Response:
@@ -87,8 +88,8 @@ class AccountApi:
         """
 
         response = self.client.put(
-            path=f"/v1/account/email",
+            path="/v1/account/email",
             json=json,
-            **kwargs)
-
+            **kwargs
+        )
         return response

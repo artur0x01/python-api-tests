@@ -4,7 +4,7 @@ from services.dm_api_account import DmApiAccount
 
 
 def test_put_v1_account_password():
-    api = DmApiAccount(host="http://localhost:5051")
+    api = DmApiAccount(host="http://5.63.153.31:5051")
     json = {
         "login": "<string>",
         "token": "<uuid>",
