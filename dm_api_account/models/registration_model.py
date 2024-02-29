@@ -1,22 +1,10 @@
-from pydantic import BaseModel, StrictStr, Field
-from enum import Enum
-
-registration_model = {
-    "login": "login1",
-    "email": "login1@mail.ru",
-    "password": "<string>",
-    "roles": "manager"
-}
-
-class Roles(Enum):
-    MANAGER = 'manager'
-    USER = 'user'
+from pydantic import BaseModel, Extra, StrictStr, Field
 
 
 class RegistrationModel(BaseModel):
-    login: StrictStr = Field(default='test')
-    email: StrictStr = Field(alias='email', title='email')
-    password: StrictStr = Field(min_length='1')
+    class Config:
+        extra = Extra.forbid
 
-
-print(RegistrationModel(**registration_model).model_dump_json())
+    login: StrictStr = Field(None, description='Login')
+    email: StrictStr = Field(None, description='Email')
+    password: StrictStr = Field(None, description='Password')

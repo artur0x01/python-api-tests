@@ -1,5 +1,7 @@
 import time
 import structlog
+from dm_api_account.models.change_email_model import ChangeEmailModel
+from dm_api_account.models.registration_model import RegistrationModel
 from services.dm_api_account import DmApiAccount
 from services.mailhog import MailHogApi
 
@@ -13,21 +15,20 @@ structlog.configure(
 def test_put_v1_account_email():
     mailhog = MailHogApi(host="http://5.63.153.31:5025")
     api = DmApiAccount(host="http://5.63.153.31:5051")
-    json = {
-        "login": "loginn28",
-        "email": "login28@mail.ru",
-        "password": "password21"
-    }
-    # check_input_json(json=json)
+    json = RegistrationModel(
+        login="login48",
+        email="email48@ru",
+        password="password"
+    )
     api.account.post_v1_account(json=json)
     time.sleep(2)
     token = mailhog.get_token_from_the_last_email()
     api.account.put_v1_account_token(token=token)
-    json = {
-        "login": "loginn28",
-        "email": "login29@mail.ru",
-        "password": "password21"
-    }
+    json = ChangeEmailModel(
+        login="login48",
+        password="password",
+        email="email49@mail.ru"
+    )
     response = api.account.put_v1_account_email(
         json
     )
