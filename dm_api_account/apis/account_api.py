@@ -1,10 +1,7 @@
 from requests import Response
-from dm_api_account.models.change_email_model import ChangeEmailModel
-from dm_api_account.models.change_password_model import ChangePasswordModel
-from dm_api_account.models.registration_model import RegistrationModel
-from dm_api_account.models.reset_password_model import ResetPasswordModel
-from dm_api_account.models.user_envelope_model import UserEnvelopeModel
+from ..models import RegistrationModel
 from restclient.restclient import RestClient
+from ..models.utilities import validate_request_json
 
 
 class AccountApi:
@@ -51,10 +48,10 @@ class AccountApi:
             path=f"/v1/account/{token}",
             **kwargs
         )
-        UserEnvelopeModel(**response.json())
+        UserEnvelope(**response.json())
         return response
 
-    def post_v1_account_password(self, json: ResetPasswordModel, **kwargs) -> Response:
+    def post_v1_account_password(self, json: ResetPassword, **kwargs) -> Response:
         """
         :param json reset_password_model
         Reset registered user password
@@ -63,13 +60,13 @@ class AccountApi:
 
         response = self.client.post(
             path="/v1/account/password",
-            json=json.model_dump(by_alias=True, exclude_none=True),
+            json=validate_request_json(json),
             **kwargs
         )
-        ResetPasswordModel(**response.json())
+        ResetPassword(**response.json())
         return response
 
-    def put_v1_account_password(self, json: ChangePasswordModel, **kwargs) -> Response:
+    def put_v1_account_password(self, json: ChangePassword, **kwargs) -> Response:
         """
         :param json change_password_model
         Change registered user password
@@ -78,13 +75,13 @@ class AccountApi:
 
         response = self.client.put(
             path="/v1/account/password",
-            json=json.model_dump(by_alias=True, exclude_none=True),
+            json=validate_request_json(json),
             **kwargs
         )
-        ChangePasswordModel(**response.json())
+        ChangePassword(**response.json())
         return response
 
-    def put_v1_account_email(self, json: ChangeEmailModel, **kwargs) -> Response:
+    def put_v1_account_email(self, json: ChangeEmail, **kwargs) -> Response:
         """
         param json change_email
         Change registered user email
@@ -93,8 +90,8 @@ class AccountApi:
 
         response = self.client.put(
             path="/v1/account/email",
-            json=json.model_dump(by_alias=True, exclude_none=True),
+            json=validate_request_json(json),
             **kwargs
         )
-        UserEnvelopeModel(**response.json())
+        UserEnvelope(**response.json())
         return response

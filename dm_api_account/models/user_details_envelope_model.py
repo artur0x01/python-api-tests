@@ -114,7 +114,7 @@ class UserDetails(BaseModel):
     settings: Optional[UserSettings] = None
 
 
-class UserDetailsEnvelopeModel(BaseModel):
+class UserDetailsEnvelope(BaseModel):
     class Config:
         extra = Extra.forbid
 

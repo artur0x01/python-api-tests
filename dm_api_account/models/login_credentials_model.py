@@ -2,7 +2,7 @@ from typing import Optional
 from pydantic import BaseModel, Extra, StrictStr, Field
 
 
-class LoginCredentialsModel(BaseModel):
+class LoginCredentials(BaseModel):
     class Config:
         extra = Extra.forbid
 

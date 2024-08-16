@@ -44,7 +44,7 @@ class User(BaseModel):
     )
 
 
-class UserEnvelopeModel(BaseModel):
+class UserEnvelope(BaseModel):
     class Config:
         extra = Extra.forbid
 

@@ -3,7 +3,7 @@ from uuid import UUID
 from pydantic import BaseModel, Extra, StrictStr, Field
 
 
-class ChangePasswordModel(BaseModel):
+class ChangePassword(BaseModel):
     class Config:
         extra = Extra.forbid
 

@@ -2,7 +2,7 @@ from typing import Optional, Dict, List
 from pydantic import BaseModel, Extra, StrictStr, Field
 
 
-class BadRequestErrorModel(BaseModel):
+class BadRequestError(BaseModel):
     class Config:
         extra = Extra.forbid
 
