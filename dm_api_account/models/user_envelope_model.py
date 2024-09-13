@@ -1,3 +1,4 @@
+from __future__ import annotations
 from datetime import datetime
 from enum import Enum
 from typing import Optional, List, Any
@@ -26,7 +27,7 @@ class User(BaseModel):
     class Config:
         extra = Extra.forbid
 
-    login: StrictStr
+    login: Optional[StrictStr] = Field(None, description='Login')
     roles: Optional[List[UserRole]] = Field(None, description='Roles')
     medium_picture_url: Optional[StrictStr] = Field(
         None, alias='mediumPictureUrl', description='Profile picture URL M-size'

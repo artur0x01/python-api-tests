@@ -1,7 +1,7 @@
 from requests import Response
 from ..models import *
 from restclient.restclient import RestClient
-from ..models.utilities import validate_request_json
+from ..utilities import validate_request_json, validate_status_code
 
 
 class LoginApi:
@@ -12,8 +12,13 @@ class LoginApi:
         if headers:
             self.client.session.headers.update(headers)
 
-    def post_v1_account_login(self, json: LoginCredentials) -> Response:
+    def post_v1_account_login(
+            self,
+            json: LoginCredentials,
+            status_code: int = 200
+    ) -> Response | UserEnvelope:
         """
+        :param status_code:
         :param json login_credentials_model
         Authenticate via credentials
         :return:
@@ -23,10 +28,12 @@ class LoginApi:
             path="/v1/account/login",
             json=validate_request_json(json)
         )
-        UserEnvelope(**response.json())
+        validate_status_code(response, status_code)
+        if response.status_code == 200:
+            return UserEnvelope(**response.json())
         return response
 
-    def delete_v1_account_login(self) -> Response:
+    def delete_v1_account_login(self, status_code: int) -> Response:
         """
         Logout as current user
         :return:
@@ -35,9 +42,10 @@ class LoginApi:
         response = self.client.delete(
             path="/v1/account/login"
         )
+        validate_status_code(response, status_code)
         return response
 
-    def delete_v1_account_login_all(self) -> Response:
+    def delete_v1_account_login_all(self, status_code: int) -> Response:
         """
         Logout from every device
         :return:
@@ -45,4 +53,5 @@ class LoginApi:
 
         response = self.client.delete(
             path="/v1/account/login/all")
+        validate_status_code(response, status_code)
         return response

@@ -1,5 +1,6 @@
-from typing import Optional, Dict, List
+from __future__ import annotations
 from pydantic import BaseModel, Extra, StrictStr, Field
+from typing import Any, Dict, List, Optional
 
 
 class BadRequestError(BaseModel):

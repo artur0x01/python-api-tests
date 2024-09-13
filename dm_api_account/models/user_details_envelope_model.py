@@ -1,7 +1,23 @@
-import datetime
+from __future__ import annotations
+from datetime import datetime
 from enum import Enum
 from typing import Optional, Any, List
 from pydantic import BaseModel, Extra, Field, StrictStr
+
+
+class BbParseMode(Enum):
+    common = 'Common'
+    info = 'Info'
+    post = 'Post'
+    chat = 'Chat'
+
+
+class InfoBbText(BaseModel):
+    class Config:
+        extra = Extra.forbid
+
+    value: Optional[StrictStr] = Field(None, description='Text')
+    parse_mode: Optional[BbParseMode] = Field(None, alias='parseMode')
 
 
 class Rating(BaseModel):
@@ -13,27 +29,13 @@ class Rating(BaseModel):
     quantity: Optional[int] = Field(None, description='Quantity rating')
 
 
-class BbParseMode(Enum):
-    common = 'Common'
-    info = 'Info'
-    post = 'Post'
-    chat = 'Chat'
-
-
-class ColorSchema(Enum):
-    modern = 'Modern'
-    pale = 'Pale'
-    classic = 'Classic'
-    classic_pale = 'ClassicPale'
-    night = 'Night'
-
-
-class InfoBbText(BaseModel):
-    class Config:
-        extra = Extra.forbid
-
-    value: Optional[StrictStr] = Field(None, description='Text')
-    parse_mode: Optional[BbParseMode] = Field(None, alias='parseMode')
+class UserRole(Enum):
+    guest = 'Guest'
+    player = 'Player'
+    administrator = 'Administrator'
+    nanny_moderator = 'NannyModerator'
+    regular_moderator = 'RegularModerator'
+    senior_moderator = 'SeniorModerator'
 
 
 class PagingSettings(BaseModel):
@@ -63,6 +65,14 @@ class PagingSettings(BaseModel):
     )
 
 
+class ColorSchema(Enum):
+    modern = 'Modern'
+    pale = 'Pale'
+    classic = 'Classic'
+    classic_pale = 'ClassicPale'
+    night = 'Night'
+
+
 class UserSettings(BaseModel):
     class Config:
         extra = Extra.forbid
@@ -76,20 +86,11 @@ class UserSettings(BaseModel):
     paging: Optional[PagingSettings] = None
 
 
-class UserRole(Enum):
-    guest = 'Guest'
-    player = 'Player'
-    administrator = 'Administrator'
-    nanny_moderator = 'NannyModerator'
-    regular_moderator = 'RegularModerator'
-    senior_moderator = 'SeniorModerator'
-
-
 class UserDetails(BaseModel):
     class Config:
         extra = Extra.forbid
 
-    login: StrictStr = Field(None, description='Login')
+    login: Optional[StrictStr] = Field(None, description='Login')
     roles: Optional[List[UserRole]] = Field(None, description='Roles')
     medium_picture_url: Optional[StrictStr] = Field(
         None, alias='mediumPictureUrl', description='Profile picture URL M-size'
