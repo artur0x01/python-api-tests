@@ -9,7 +9,6 @@ class AccountApi:
     def __init__(self, host, headers=None):
         self.host = host
         self.client = RestClient(host=host, headers=headers)
-        self.client.headers = headers
         if headers:
             self.client.session.headers.update(headers)
 
@@ -38,7 +37,7 @@ class AccountApi:
             self,
             status_code: int = 200,
             **kwargs
-    ) -> Response:
+    ) -> Response | UserDetailsEnvelope:
         """
         Get current user
         :return:
@@ -49,6 +48,8 @@ class AccountApi:
             **kwargs
         )
         validate_status_code(response, status_code)
+        #if response.status_code == 200:
+            #return UserDetailsEnvelope(**response.json())
         return response
 
     def put_v1_account_token(

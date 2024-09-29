@@ -1,13 +1,13 @@
-from services.dm_api_account import DmApiAccount
+from services.dm_api_account import Facade
 
 
-def test_post_v1_account_password():
-    api = DmApiAccount(host="http://5.63.153.31:5051")
+def test_post_v1_account_password(login, email):
+    api = Facade(host="http://5.63.153.31:5051")
     json = {
-        "login": "<string>",
-        "email": "<string>"
+        "login": login,
+        "email": email
     }
-    response = api.account.post_v1_account_password(
+    response = api.account_api.post_v1_account_password(
         json
     )
     print(response)

@@ -16,11 +16,11 @@ class LoginApi:
             self,
             json: LoginCredentials,
             status_code: int = 200
-    ) -> Response | UserEnvelope:
+    ) -> Response:
         """
+        Authenticate via credentials
         :param status_code:
         :param json login_credentials_model
-        Authenticate via credentials
         :return:
         """
 
@@ -30,10 +30,10 @@ class LoginApi:
         )
         validate_status_code(response, status_code)
         if response.status_code == 200:
-            return UserEnvelope(**response.json())
+            UserEnvelope(**response.json())
         return response
 
-    def delete_v1_account_login(self, status_code: int) -> Response:
+    def delete_v1_account_login(self) -> Response:
         """
         Logout as current user
         :return:
@@ -42,10 +42,10 @@ class LoginApi:
         response = self.client.delete(
             path="/v1/account/login"
         )
-        validate_status_code(response, status_code)
+        #validate_status_code(response, status_code)
         return response
 
-    def delete_v1_account_login_all(self, status_code: int) -> Response:
+    def delete_v1_account_login_all(self) -> Response:
         """
         Logout from every device
         :return:
@@ -53,5 +53,5 @@ class LoginApi:
 
         response = self.client.delete(
             path="/v1/account/login/all")
-        validate_status_code(response, status_code)
+        #validate_status_code(response, status_code)
         return response

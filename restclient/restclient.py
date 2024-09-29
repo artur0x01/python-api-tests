@@ -17,7 +17,6 @@ class RestClient:
     def __init__(self, host, headers=None):
         self.host = host
         self.session = session()
-        self.session.headers = headers
         if headers:
             self.session.headers.update(headers)
         self.log = structlog.get_logger(self.__class__.__name__).bind(service='api')

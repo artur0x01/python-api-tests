@@ -1,14 +1,22 @@
-from hamcrest import assert_that, has_properties
-from dm_api_account.models.user_details_envelope_model import UserDetails
-from services.dm_api_account import DmApiAccount
+import time
+
+import structlog
+from services.dm_api_account import Facade
+from tests.test_post_v1_account_login import test_post_v1_account_login
+
+structlog.configure(
+    processors=[
+        structlog.processors.JSONRenderer(indent=4, sort_keys=True, ensure_ascii=False)
+    ]
+)
 
 
 def test_get_v1_account():
-    api = DmApiAccount("http://5.63.153.31:5051")
-    response = api.account.get_v1_account(status_code=200)
-    assert_that(response.resource, has_properties(
-        {
-            "icq": "123",
-            "login": "login45"
-        }
-    ))
+    api = Facade("http://5.63.153.31:5051")
+    test_post_v1_account_login()
+    time.sleep(2)
+    token = api.login.get_auth_token(login='login_test000025', password='password01')
+
+    api.account.set_headers(headers=token)
+
+    api.account.get_current_user_info()
