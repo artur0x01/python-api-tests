@@ -1,5 +1,6 @@
-requests
+requests~=2.31.0
 pytest
-structlog
-curlify
-pydantic
+structlog~=23.1.0
+curlify~=2.2.1
+pydantic~=2.8.2
+records~=0.6.0
