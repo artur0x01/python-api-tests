@@ -1,4 +1,6 @@
+import time
 import structlog
+from generic.helpers.mailhog import MailhogApi
 from services.dm_api_account import Facade
 from dm_api_account.models.user_envelope_model import UserRole
 from hamcrest import assert_that, has_properties
@@ -12,20 +14,31 @@ structlog.configure(
 
 def test_put_v1_account_token():
     api = Facade(host="http://5.63.153.31:5051")
-    #mailhog = MailHogApi(host="http://5.63.153.31:5025")
-    #json = Registration(
-    #    login="login42",
-    #    email="email42@ru",
-    #    password="password42"
-    #)
-    #api.account.post_v1_account(json=json)
-    #time.sleep(2)
-    #token = mailhog.get_token_from_the_last_email()
-    response = api.account_api.put_v1_account_token(token="a4aa42ee-2f4e-4b55-a05f-135011d81cbe", status_code=200)
+    mailhog = MailhogApi(host="http://5.63.153.31:5025")
+
+    login = 'login_test000040'
+    email = 'login_test000040@gmail.com'
+    password = 'password01'
+
+    response = api.account.register_new_user(
+        login=login,
+        email=email,
+        password=password
+    )
+
+    time.sleep(2)
+
+    token = mailhog.get_token_from_the_last_email()
+
+    response = api.account_api.put_v1_account_token(token=token, status_code=200)
+
     assert_that(response.resource, has_properties(
         {
             "login": "login42",
             "roles": [UserRole.guest, UserRole.player]
-         }
-    ))
-    #assert response.status_code == 200, f'Статус кода ответа должен быть равен 201, но он равен {response.status_code}'
+        }
+    )
+                )
+
+    assert response.status_code == 200, f'Статус кода ответа должен быть равен 201, но он равен {response.status_code}'
+

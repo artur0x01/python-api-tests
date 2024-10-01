@@ -48,8 +48,8 @@ class AccountApi:
             **kwargs
         )
         validate_status_code(response, status_code)
-        #if response.status_code == 200:
-            #return UserDetailsEnvelope(**response.json())
+        if response.status_code == 200:
+            return UserDetailsEnvelope(**response.json())
         return response
 
     def put_v1_account_token(

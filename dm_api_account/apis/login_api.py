@@ -16,7 +16,7 @@ class LoginApi:
             self,
             json: LoginCredentials,
             status_code: int = 200
-    ) -> Response:
+    ) -> Response | UserEnvelope:
         """
         Authenticate via credentials
         :param status_code:
