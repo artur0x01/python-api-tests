@@ -1,8 +1,6 @@
 import time
-
 import structlog
 from services.dm_api_account import Facade
-from tests.test_post_v1_account_login import test_post_v1_account_login
 
 structlog.configure(
     processors=[
@@ -13,9 +11,27 @@ structlog.configure(
 
 def test_delete_v1_account_login_all():
     api = Facade(host="http://5.63.153.31:5051")
-    test_post_v1_account_login()
+
+    login = 'login_test000035',
+    email = 'login_test000035@gmail.com',
+    password = 'password01'
+
+    api.account.register_new_user(
+        login=login,
+        email=email,
+        password=password
+    )
+
     time.sleep(2)
-    token = api.login.get_auth_token(login='login_test000031', password='password01')
-    api.account.set_headers(headers=token)
-    api.login.logout_user()
-    api.login_api.delete_v1_account_login_all()
+
+    token = (api.login.get_auth_token(
+        login=login,
+        password=password
+    )
+    )
+
+    api.account.set_headers(
+        headers=token
+    )
+
+    api.login.logout_user_from_all_devices()
